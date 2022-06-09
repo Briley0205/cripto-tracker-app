@@ -6,10 +6,10 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/:coinId">
+        <Route path="/cripto-tracker-app/:coinId">
           <Coin />
         </Route>
-        <Route path={`${process.env.PUBLIC_URL}/`}>
+        <Route path="/cripto-tracker-app">
           <Coins />
         </Route>
       </Switch>
