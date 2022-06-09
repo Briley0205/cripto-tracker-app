@@ -240,17 +240,17 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/cripto-tracker-app/${coinId}/chart`}>Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`/cripto-tracker-app/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
           <Switch>
-            <Route path={`/${coinId}/price`}>
+            <Route path={`/cripto-tracker-app/${coinId}/price`}>
               <Price coinId={coinId} />
             </Route>
-            <Route path={`/${coinId}/chart`}>
+            <Route path={`/cripto-tracker-app/${coinId}/chart`}>
               <Chart coinId={coinId} />
             </Route>
           </Switch>
