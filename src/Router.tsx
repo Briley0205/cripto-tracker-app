@@ -9,7 +9,7 @@ function Router() {
         <Route path="/:coinId">
           <Coin />
         </Route>
-        <Route path="/">
+        <Route path={`${process.env.PUBLIC_URL}/`}>
           <Coins />
         </Route>
       </Switch>
