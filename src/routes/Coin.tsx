@@ -208,7 +208,7 @@ function Coin() {
         "Loading..."
       ) : (
         <>
-          <Link to={{ pathname: "/" }}>
+          <Link to={{ pathname: "/cripto-tracker-app/" }}>
             <BackButton>
               <span>Back</span>
             </BackButton>
