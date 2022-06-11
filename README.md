@@ -20,5 +20,15 @@
 ### 기능
 
 <details>
-<summary></summary>
+<summary>Chart / Price</summary>
+
+#### fetch coins & draw it on Chart / Price
+
+</details>
+
+<details>
+<summary>Dark mode & Light mode</summary>
+
+#### Switch modes using atom, recoils
+
 </details>
