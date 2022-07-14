@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import { fetchCoinInfo, fetchCoinPrice, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
 import Chart from "./Chart";
 import Price from "./Price";
@@ -124,27 +124,30 @@ interface PriceData {
   beta_value: number;
   first_data_at: string;
   last_updated: string;
-  quotes: {
-    USD: {
-      ath_date: string;
-      ath_price: number;
-      market_cap: number;
-      market_cap_change_24h: number;
-      percent_change_1h: number;
-      percent_change_1y: number;
-      percent_change_6h: number;
-      percent_change_7d: number;
-      percent_change_12h: number;
-      percent_change_15m: number;
-      percent_change_24h: number;
-      percent_change_30d: number;
-      percent_change_30m: number;
-      percent_from_price_ath: number;
-      price: number;
-      volume_24h: number;
-      volume_24h_change_24h: number;
-    };
-  };
+  quotes?: Quotes;
+}
+
+interface Usd {
+  price: number;
+  volume_24h: number;
+  volume_24h_change_24h: number;
+  market_cap: number;
+  market_cap_change_24h: number;
+  percent_change_15m: number;
+  percent_change_30m: number;
+  percent_change_1h: number;
+  percent_change_6h: number;
+  percent_change_12h: number;
+  percent_change_24h: number;
+  percent_change_7d: number;
+  percent_change_30d: number;
+  percent_change_1y: number;
+  ath_price: number;
+  ath_date: Date;
+  percent_from_price_ath: number;
+}
+interface Quotes {
+  USD: Usd;
 }
 
 function Coin() {
@@ -178,7 +181,7 @@ function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId)
+    () => fetchCoinPrice(coinId)
     //{ refetchInterval: 5000 }
   );
   const loading = infoLoading || tickersLoading;
@@ -201,6 +204,7 @@ function Coin() {
             right: "12px",
             top: "15px",
             color: isDark ? "#668BC4" : "plum",
+            cursor: "pointer",
           }}
         />
       </Header>
@@ -243,12 +247,19 @@ function Coin() {
               <Link to={`/cripto-tracker-app/${coinId}/chart`}>Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/cripto-tracker-app/${coinId}/price`}>Price</Link>
+              <Link
+                to={{
+                  pathname: `/cripto-tracker-app/${coinId}/price`,
+                  state: { priceData: tickersData?.quotes?.USD },
+                }}
+              >
+                Price
+              </Link>
             </Tab>
           </Tabs>
           <Switch>
             <Route path={`/cripto-tracker-app/${coinId}/price`}>
-              <Price coinId={coinId} />
+              <Price />
             </Route>
             <Route path={`/cripto-tracker-app/${coinId}/chart`}>
               <Chart coinId={coinId} />
